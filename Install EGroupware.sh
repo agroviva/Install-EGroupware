@@ -1,6 +1,6 @@
 #!/bin/bash
 STD_MSG="About to Upgrade all the packages!"
-echo STD_MSG;
+echo $STD_MSG;
 
 sudo apt update && sudo apt upgrade -y
 
