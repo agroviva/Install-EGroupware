@@ -23,8 +23,8 @@ sync_directories()
     rsync -u -r -v -e 'ssh -p 2712' root@sourceEGW:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
 
-    rsync -u --exclude 'tmp/*' -r -v -e 'ssh -p 2712' root@sourceEGW:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
-    #rsync -u --exclude 'tmp/*' -r -v -e 'ssh -p 2712' root@sourceEGW:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
+    # rsync -u --exclude 'tmp/*' -r -v -e 'ssh -p 2712' root@sourceEGW:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
+    # rsync -u --exclude 'tmp/*' -r -v -e 'ssh -p 2712' root@sourceEGW:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
 }
 
 sync_directories()
