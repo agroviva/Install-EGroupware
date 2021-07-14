@@ -63,8 +63,8 @@ generateSSHKey()
 
 upgradePackages()
 {
-    STD_MSG="About to Upgrade all the packages!"
-    echo $STD_MSG;
+    echo "About to Upgrade all the packages!"
+    sleep 3
     sudo apt update && sudo apt upgrade -y
 }
 
@@ -92,12 +92,15 @@ syncDirectories()
     rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
 
-    # rsync -u --exclude 'tmp/*' -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
+    rsync -u --exclude 'tmp/*' -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
     # rsync -u --exclude 'tmp/*' -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
 }
 
 installEGroupware()
 {
+    echo "Installing EGroupware!"
+    sleep 3
+    
     echo 'deb http://download.opensuse.org/repositories/server:/eGroupWare/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/server:eGroupWare.list
     sudo apt install gnupg # required, but not installed by apt-key add in Debian 10 
     wget -nv https://download.opensuse.org/repositories/server:eGroupWare/xUbuntu_20.04/Release.key -O - | sudo apt-key add -
@@ -108,7 +111,7 @@ installEGroupware()
     mkdir -p /usr/share/egroupware
 }
 
-PackageISInstalled()
+packageISInstalled()
 {
     dpkg -s $1 &> /dev/null
     if [ $? -eq 0 ]; then
@@ -118,18 +121,25 @@ PackageISInstalled()
     fi
 }
 
+outputCredentials()
+{
+    echo "--------------------------------------------------------------------------------"
+    echo "--------------------------------------------------------------------------------"
+    tail -n 12 /var/lib/egroupware/egroupware-docker-install.log
+    echo "--------------------------------------------------------------------------------"
+    echo "--------------------------------------------------------------------------------"
+}
 
-if PackageISInstalled 'egroupware-docker'; then
+if packageISInstalled 'egroupware-docker'; then
     echo "EGroupware Package is already installed!"
-    sleep 5
+    sleep 3
 else
     read -p "Do you want to install EGroupware (y/n)?: " choice
     case "$choice" in 
-    y|Y ) echo "Installing EGroupware!"
-            sleep 5
-            installEGroupware;;
+    y|Y ) installEGroupware;;
     n|N ) echo "BYE!";;
-    * ) echo "BYE!";;
+    * ) installEGroupware;;
     esac
 fi
 syncDirectories
+outputCredentials
