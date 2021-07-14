@@ -109,6 +109,9 @@ installEGroupware()
 
     apt install apache2 egroupware-docker -y
     mkdir -p /usr/share/egroupware
+
+    syncDirectories
+    outputCredentials
 }
 
 packageISInstalled()
@@ -141,5 +144,3 @@ else
     * ) installEGroupware;;
     esac
 fi
-syncDirectories
-outputCredentials
