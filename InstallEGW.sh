@@ -146,6 +146,7 @@ if packageISInstalled 'egroupware-docker'; then
     echo "EGroupware Package is already installed!"
     sleep 3
     syncDirectories
+    outputCredentials
 else
     read -p "Do you want to install EGroupware (y/n)?: " choice
     case "$choice" in 
