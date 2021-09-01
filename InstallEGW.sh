@@ -77,7 +77,7 @@ syncDirectories()
     # read -p "Where is the data located?: " host
     # read -p "SSH-Port?: " port
     host=138.201.206.170
-    port:2712
+    port=2712
 
     generateSSHKey $host $port
 
