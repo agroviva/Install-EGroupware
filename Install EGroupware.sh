@@ -97,15 +97,11 @@ syncDirectories()
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
 
-    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
+    rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
 
+    chown www-data:www-data /var/lib/egroupware/egw00/
     chown www-data:www-data * /var/lib/egroupware/egw00/ -R
     chown www-data:www-data * /usr/share/egroupware/ -R
-    chown www-data:www-data /var/lib/egroupware/egw00/
-
-    # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
-    # rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
-
 }
 
 installEGroupware()
@@ -120,6 +116,7 @@ installEGroupware()
     upgradePackages
 
     apt install apache2 egroupware-docker -y
+    /etc/egroupware-docker/use-epl.sh
     mkdir -p /usr/share/egroupware
 
     syncDirectories
