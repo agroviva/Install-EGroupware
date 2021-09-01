@@ -147,6 +147,7 @@ if packageISInstalled 'egroupware-docker'; then
     sleep 3
     syncDirectories
     outputCredentials
+
 else
     read -p "Do you want to install EGroupware (y/n)?: " choice
     case "$choice" in 
