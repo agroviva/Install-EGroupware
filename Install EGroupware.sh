@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# docker exec -it egroupware-db bash
+# mysql -u root -p
+# create database egw00;
+# service docker restart
 
 generateSSHKey()
 {
@@ -70,30 +74,38 @@ upgradePackages()
 
 syncDirectories()
 {
-    #read -p "Where is the data located?: " host
-    host="e00.agroviva.net"
-    port="2712"
+    # read -p "Where is the data located?: " host
+    # read -p "SSH-Port?: " port
+    host=138.201.206.170
+    port:2712
 
     generateSSHKey $host $port
 
     # scp -P $port -r root@$host:/usr/share/egroupware/cao/  /usr/share/egroupware/cao/
     # scp -P $port -r root@$host:/usr/share/egroupware/attendance/  /usr/share/egroupware/attendance/
     # scp -P $port -r root@$host:/usr/share/egroupware/threecx/  /usr/share/egroupware/threecx/
-
+    
     sudo chmod 600 ~/.ssh/id_rsa
     sudo chmod 600 ~/.ssh/id_rsa.pub
     sudo chmod 644 ~/.ssh/known_hosts
     sudo chmod 755 ~/.ssh
 
-    rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/agroviva/*  /usr/share/egroupware/agroviva/
-    rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
-    rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/attendance/*  /usr/share/egroupware/attendance/
-    rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/threecx/*  /usr/share/egroupware/threecx/
-    rsync -u -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/agroviva/*  /usr/share/egroupware/agroviva/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/attendance/*  /usr/share/egroupware/attendance/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/threecx/*  /usr/share/egroupware/threecx/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
 
-    rsync -u --exclude 'tmp/*' -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
-    # rsync -u --exclude 'tmp/*' -r -v -e 'ssh -i ~/.ssh/id_rsa -p 2712' root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
+
+    chown www-data:www-data * /var/lib/egroupware/egw00/ -R
+    chown www-data:www-data * /usr/share/egroupware/ -R
+    chown www-data:www-data /var/lib/egroupware/egw00/
+
+    # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
+    # rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw03/*  /var/lib/egroupware/egw03/
+
 }
 
 installEGroupware()
@@ -136,6 +148,7 @@ outputCredentials()
 if packageISInstalled 'egroupware-docker'; then
     echo "EGroupware Package is already installed!"
     sleep 3
+    syncDirectories
 else
     read -p "Do you want to install EGroupware (y/n)?: " choice
     case "$choice" in 
