@@ -90,6 +90,7 @@ syncDirectories()
     sudo chmod 644 ~/.ssh/known_hosts
     sudo chmod 755 ~/.ssh
 
+    mkdir -p /usr/share/egroupware
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/agroviva/*  /usr/share/egroupware/agroviva/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/attendance/*  /usr/share/egroupware/attendance/
@@ -121,7 +122,6 @@ installEGroupware()
 
     apt install apache2 egroupware-docker -y
     /etc/egroupware-docker/use-epl.sh
-    mkdir -p /usr/share/egroupware
 
     syncDirectories
     outputCredentials
