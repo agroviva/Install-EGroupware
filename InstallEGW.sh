@@ -101,6 +101,10 @@ syncDirectories()
 
     chown www-data:www-data /var/lib/egroupware/egw00/
     chown www-data:www-data * /var/lib/egroupware/egw00/ -R
+    chmod 755 * /var/lib/egroupware/egw00/ -R
+    chmod 700 /var/lib/egroupware/egw00/files/activesync/
+    rm -rf /var/lib/egroupware/egw00/temp/
+    rm -rf /var/lib/egroupware/egw00/tmp/
     chown www-data:www-data * /usr/share/egroupware/ -R
 }
 
