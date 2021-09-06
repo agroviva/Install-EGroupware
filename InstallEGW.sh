@@ -4,6 +4,11 @@
 # mysql -u root -p
 # create database egw00;
 # service docker restart
+# apt install certbot python3-certbot-apache
+# nano /etc/apache2/sites-enabled/000-default.conf   // Server-Name
+# certbot --apache -d e00.agroviva.net
+# certbot renew --dry-run
+# service apache2 restart
 
 generateSSHKey()
 {
@@ -11,8 +16,6 @@ generateSSHKey()
 
     echo
     echo This script will help you setup ssh public key authentication.
-
-
 
     host=$1
     port=$2
