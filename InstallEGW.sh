@@ -1,14 +1,18 @@
 #!/bin/bash
 
+# How to access the database in a docker container
 # docker exec -it egroupware-db bash
 # mysql -u root -p
-# create database egw00;
+# find password under /etc/egroupware-docker/.env
+
+# How to restart Docker
 # service docker restart
+
+# How to install a Let's Encrypt Certificate
 # apt install certbot python3-certbot-apache
-# nano /etc/apache2/sites-enabled/000-default.conf   // Server-Name
-# certbot --apache -d e00.agroviva.net
+# nano /etc/apache2/sites-enabled/000-default.conf   // Set SERVER-NAME
+# certbot --apache -d SERVER-NAME
 # certbot renew --dry-run
-# service apache2 restart
 
 generateSSHKey()
 {
@@ -81,35 +85,34 @@ syncDirectories()
     # read -p "SSH-Port?: " port
     host=138.201.206.170
     port=2712
+    instance='egw00'
 
     generateSSHKey $host $port
-
-    # scp -P $port -r root@$host:/usr/share/egroupware/cao/  /usr/share/egroupware/cao/
-    # scp -P $port -r root@$host:/usr/share/egroupware/attendance/  /usr/share/egroupware/attendance/
-    # scp -P $port -r root@$host:/usr/share/egroupware/threecx/  /usr/share/egroupware/threecx/
-    
+ 
     sudo chmod 600 ~/.ssh/id_rsa
     sudo chmod 600 ~/.ssh/id_rsa.pub
     sudo chmod 644 ~/.ssh/known_hosts
     sudo chmod 755 ~/.ssh
 
     mkdir -p /usr/share/egroupware
+    # Sync OLD Apps
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/agroviva/*  /usr/share/egroupware/agroviva/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/attendance/*  /usr/share/egroupware/attendance/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/threecx/*  /usr/share/egroupware/threecx/
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
+    #Sync Files
+    rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/$instance/*  /var/lib/egroupware/$instance/
 
-    rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/egw00/*  /var/lib/egroupware/egw00/
-
-    chown www-data:www-data /var/lib/egroupware/egw00/
-    chown www-data:www-data * /var/lib/egroupware/egw00/ -R
-    chmod 755 * /var/lib/egroupware/egw00/ -R
-    chmod 700 /var/lib/egroupware/egw00/files/activesync/
-    rm -rf /var/lib/egroupware/egw00/temp/
-    rm -rf /var/lib/egroupware/egw00/tmp/
+    chown www-data:www-data /var/lib/egroupware/$instance/
+    chown www-data:www-data * /var/lib/egroupware/$instance/ -R
+    chmod 755 * /var/lib/egroupware/$instance/ -R
+    chmod 700 /var/lib/egroupware/$instance/files/activesync/
+    rm -rf /var/lib/egroupware/$instance/temp/
+    rm -rf /var/lib/egroupware/$instance/tmp/
     chown www-data:www-data * /usr/share/egroupware/ -R
+    service docker restart
 }
 
 installEGroupware()
