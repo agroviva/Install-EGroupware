@@ -97,10 +97,10 @@ syncDirectories()
     mkdir -p /usr/share/egroupware
     # Sync OLD Apps
     rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/agroviva/*  /usr/share/egroupware/agroviva/
-    # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/cao/*  /usr/share/egroupware/cao/
     # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/attendance/*  /usr/share/egroupware/attendance/
     # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/threecx/*  /usr/share/egroupware/threecx/
-    # rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
+    rsync -u -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/usr/share/egroupware/wiki/*  /usr/share/egroupware/wiki/
 
     #Sync Files
     rsync -u --exclude 'tmp/*' -r -v -e "ssh -i ~/.ssh/id_rsa -p ${port}" root@$host:/var/lib/egroupware/$instance/*  /var/lib/egroupware/$instance/
