@@ -111,7 +111,7 @@ syncDirectories()
     chmod 700 /var/lib/egroupware/$instance/files/activesync/
     rm -rf /var/lib/egroupware/$instance/temp/
     rm -rf /var/lib/egroupware/$instance/tmp/
-    chown www-data:www-data * /usr/share/egroupware/ -R
+    chown root:root * /usr/share/egroupware/ -R
     service docker restart
 }
 
