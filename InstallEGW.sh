@@ -120,9 +120,10 @@ installEGroupware()
     echo "Installing EGroupware!"
     sleep 3
     
-    echo 'deb http://download.opensuse.org/repositories/server:/eGroupWare/xUbuntu_20.04/ /' | sudo tee /etc/apt/sources.list.d/server:eGroupWare.list
-    sudo apt install gnupg # required, but not installed by apt-key add in Debian 10 
-    wget -nv https://download.opensuse.org/repositories/server:eGroupWare/xUbuntu_20.04/Release.key -O - | sudo apt-key add -
+    echo 'deb http://download.opensuse.org/repositories/server:/eGroupWare/xUbuntu_22.04/ /' | sudo tee /etc/apt/sources.list.d/server:eGroupWare.list
+    sudo apt install gnupg # required, but not installed by apt-key add in Debian 10/11
+    wget -nv https://download.opensuse.org/repositories/server:eGroupWare/xUbuntu_22.04/Release.key -O - | sudo apt-key add - | sudo tee /etc/apt/trusted.gpg.d/server:eGroupWare.asc
+    sudo apt update
 
     upgradePackages
 
