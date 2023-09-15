@@ -111,7 +111,6 @@ syncDirectories()
     rm -rf /var/lib/egroupware/$instance/temp/
     rm -rf /var/lib/egroupware/$instance/tmp/
     chown root:root * /usr/share/egroupware/ -R
-    chown root:root * /var/lib/egroupware/$instance/ -R
     service docker restart
 }
 
