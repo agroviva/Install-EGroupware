@@ -126,7 +126,7 @@ installEGroupware()
 
     upgradePackages
 
-    apt install apache2 egroupware-docker -y
+    apt install egroupware-docker -y
     /etc/egroupware-docker/use-epl.sh
 
     syncDirectories
