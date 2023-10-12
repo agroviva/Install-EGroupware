@@ -16,7 +16,7 @@ index d480568617..268be80149 100644
  				. (count($cat) > 0 ? ': ' : '') . implode(', ', $cats[$main]) . "\n";
  		}
 +
-+		if ($_SERVER['SERVER_NAME'] == "e32.agroviva.net") {
++		if (true) {
 +			$replacements = $this->extra_replacements_e32($replacements);
 +			$replacements = $this->e32_mitglieder_stammdaten($replacements);
 +		}
