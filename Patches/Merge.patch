@@ -163,7 +163,7 @@ index d480568617..268be80149 100644
 +						break;
 +
 +					case "vst":
-+						$vst = ($customfield['contact_value'] * 100)."%";
++						$vst = (intval($customfield['contact_value']) * 100)."%";
 +						break;
 +
 +					case "antrag":
