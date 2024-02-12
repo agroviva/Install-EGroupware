@@ -1,4 +1,21 @@
 #!/bin/bash
+cd /etc/egroupware-docker
+
+script_file="custom-agroviva-composer.sh"
+cat <<EOL > "$script_file"
+#!/bin/bash
+# Call original entrypoint
+#docker-entrypoint.sh
+
+# Wait for egroupware to be fully up and running
+# (Implement any necessary logic to ensure egroupware is ready)
+
+# Execute your script
+cd /usr/share/egroupware/agroviva/
+php composer.phar update
+EOL
+
+chmod +x "$script_file"
 
 cd /usr/share/egroupware
 rm -rf agroviva/
