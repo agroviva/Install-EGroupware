@@ -83,8 +83,8 @@ syncDirectories()
 {
     # read -p "Where is the data located?: " host
     # read -p "SSH-Port?: " port
-    host=138.201.206.170
-    port=2712
+    read -p "EGroupware e.g. e00.example.net " host
+    port=22
     read -p "EGroupware-Instance e.g. egw00 " instance
 
     generateSSHKey $host $port
