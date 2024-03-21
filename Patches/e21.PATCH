@@ -1,0 +1,24 @@
+From cbcb5cf4a833f66eee1946ed758b1cb356a97856 Mon Sep 17 00:00:00 2001
+From: Enver Morinaj <34061524+emorinaj@users.noreply.github.com>
+Date: Thu, 21 Mar 2024 09:51:58 +0100
+Subject: [PATCH] Update app.css
+
+---
+ timesheet/templates/default/app.css | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/timesheet/templates/default/app.css b/timesheet/templates/default/app.css
+index 1458c5c94fb..ad29281fbc2 100644
+--- a/timesheet/templates/default/app.css
++++ b/timesheet/templates/default/app.css
+@@ -42,4 +42,8 @@ table.egwGridView_grid tbody td[align=right] {
+ 	float: left;
+ }
+ 
+-label[id^='timesheet-index_'][id$='ts_start]'] time {padding-left:5px;}
+\ No newline at end of file
++label[id^='timesheet-index_'][id$='ts_start]'] time {padding-left:5px;}
++
++#timesheet-index_nm table.et2_grid {
++    width: 100%;
++}
