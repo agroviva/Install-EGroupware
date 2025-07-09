@@ -59,7 +59,7 @@ index ff94201..805b28d 100644
 +
 +				$status = $status_data[$timesheet['ts_status']]['name'];
 +
-+				$replacements['$$stundenzettel_export_1$$'] .= "\"$pm_title\";\"$pm_id\";\"$element_ID\";\"$element_Titel\";\"$datum\";\"$dauer\";\"$resourcen\";\"$status\";\"$position\";\"$category\";\n";
++				$replacements['$$stundenzettel_export_1$$'] .= "\"$pm_title\";\"$pm_id\";\"$element_ID\";\"$element_Titel\";\"$datum\";\"$dauer\";\"$resourcen\";\"$status\";\"$position\";\"$category\"\n";
 +			}
 +		} else {
 +			$replacements['$$stundenzettel_export_1$$'] = "";
