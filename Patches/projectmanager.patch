@@ -11,7 +11,7 @@ diff --git a/projectmanager/inc/class.projectmanager_merge.inc.php b/projectmana
 index ff94201..805b28d 100644
 --- a/projectmanager/inc/class.projectmanager_merge.inc.php
 +++ b/projectmanager/inc/class.projectmanager_merge.inc.php
-@@ -668,6 +668,60 @@ public function projectmanager_replacements($project, $prefix = '', &$content =
+@@ -700,6 +700,60 @@ public function projectmanager_replacements($project, $prefix = '', &$content =
  		// Project links - check content first, finding all the links is expensive
  		$replacements += $this->get_all_links('projectmanager', $project['pm_id'], $prefix, $content);
  
